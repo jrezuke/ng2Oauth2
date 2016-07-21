@@ -55,12 +55,12 @@ export class SecurityService {
         this.store("IsAuthorized", true);
 
         var data: any = this.getDataFromToken(token);
-        for (var i = 0; i < data.role.length; i++) {
-            if (data.role[i] === "dataEventRecords.admin") {
-                this.HasAdminRole = true;
-                this.store("HasAdminRole", true)
-            }
-        }
+        // for (var i = 0; i < data.role.length; i++) {
+        //     if (data.role[i] === "dataEventRecords.admin") {
+        //         this.HasAdminRole = true;
+        //         this.store("HasAdminRole", true)
+        //     }
+        // }
     }
 
     public Authorize() {
@@ -140,11 +140,14 @@ export class SecurityService {
             console.log(this.retrieve("authorizationData"));
 
             // router navigate to DataEventRecordsList
-            this._router.navigate(['/dataeventrecords']);
+            console.log('router befor:', this._router.url);
+            //this._router.navigate(['/authorized']);
+            //window.location.href = "http://localhost:3000/authorized"
+            console.log('router after:', this._router.url);
         }
         else {
             this.ResetAuthorizationData();
-            this._router.navigate(['/Unauthorized']);
+            this._router.navigate(['/unauthorized']);
         }
     }
 

@@ -1,25 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { SecurityService } from './services/SecurityService';
 
 @Component({
     selector: 'my-app',
     directives: [ROUTER_DIRECTIVES],
-    template: `<h1>Angular 2 OAuth 2 App</h1>
-               {{hash}}
-               <router-outlet></router-outlet>`
+    templateUrl: 'app/app.component.html'
 })
 
 export class AppComponent implements OnInit {
     settings: any;
     hash: string;
 
-    constructor(public securityService: SecurityService) { }
+    constructor(public securityService: SecurityService, private _router: Router) { }
 
     ngOnInit() {
         if (window.location.hash) {
             this.hash = window.location.hash;
-            //this.securityService.AuthorizedCallback();
+            this.securityService.AuthorizedCallback();
+             //console.log('router.url app.component', this._router.url);
+             //this._router.navigate(['/authorized']);
+            //console.log('router.url app.component', this._router.url);
+            // console.log('after router.navigate', this._router);
         }
         else {
             // var authorizationUrl = 'https://localhost:44345/connect/authorize';
@@ -41,8 +43,18 @@ export class AppComponent implements OnInit {
             //     "nonce=" + encodeURI(nonce) + "&" +
             //     "state=" + encodeURI(state);
             // window.location.href = url;
-            this.securityService.Authorize();
+            //this.securityService.Authorize();
         }
-     }
+    }
+
+    public Login() {
+        console.log("Do login logic");
+        this.securityService.Authorize();
+    }
+
+    public Logout() {
+        console.log("Do logout logic");
+        this.securityService.Logoff();
+    }
 
 }
