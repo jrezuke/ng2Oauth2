@@ -141,7 +141,7 @@ export class SecurityService {
 
             // router navigate to DataEventRecordsList
             console.log('router befor:', this._router.url);
-            //this._router.navigate(['/authorized']);
+            this._router.navigate(['authorized']);
             //window.location.href = "http://localhost:3000/authorized"
             console.log('router after:', this._router.url);
         }

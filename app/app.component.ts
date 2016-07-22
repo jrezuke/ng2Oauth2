@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { SecurityService } from './services/SecurityService';
 
@@ -8,18 +8,24 @@ import { SecurityService } from './services/SecurityService';
     templateUrl: 'app/app.component.html'
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
     settings: any;
     hash: string;
 
     constructor(public securityService: SecurityService, private _router: Router) { }
 
+    ngAfterViewInit() {
+        if (this.securityService.IsAuthorized) {
+            this._router.navigate(['/authorized']);
+        }
+    }
     ngOnInit() {
+        //this._router.navigate(['/authorized']);
         if (window.location.hash) {
             this.hash = window.location.hash;
             this.securityService.AuthorizedCallback();
              //console.log('router.url app.component', this._router.url);
-             //this._router.navigate(['/authorized']);
+            //this._router.navigate(['/authorized']);
             //console.log('router.url app.component', this._router.url);
             // console.log('after router.navigate', this._router);
         }
